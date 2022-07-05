@@ -18,6 +18,7 @@
 #save(tissues, marker_file, file = "mydata.RData")
 
 CaCao.Tissues<- function(){
+  setwd(dirname(rstudioapi::getActiveDocumentContext()$path))# define pasta de trabalho
   load("../mydata.RData")
   return(tissues)
 }
@@ -30,6 +31,7 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
   require('patchwork')
   require('ggforce')
   require('ggrepel')
+  setwd(dirname(rstudioapi::getActiveDocumentContext()$path))# define pasta de trabalho
   load("../mydata.RData")
   celltypes.df <- data.frame(cluster=c(all.markers.sig$cluster),marker=c(all.markers.sig$gene))
   df.marker <- filter(marker_file,Species==specie)
