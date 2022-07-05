@@ -17,7 +17,7 @@
 
 
 CaCao.Tissues<- function(){
-  tissues <- readRDS('All_tissues.rds')
+  tissues <- readRDS('./All_tissues.rds')
   return(tissues)
 }
 
@@ -30,7 +30,7 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
   require('ggforce')
   require('ggrepel')
 
-  marker_file <- readRDS('All_markers.rds')
+  marker_file <- readRDS('./All_markers.rds')
   celltypes.df <- data.frame(cluster=c(all.markers.sig$cluster),marker=c(all.markers.sig$gene))
   colnames(marker_file) <- str_replace(colnames(marker_file),' ','.')
   df.marker <- filter(marker_file,Species==specie)
