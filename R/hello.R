@@ -39,9 +39,13 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
   df_bar <- melt(df_bar)
   clusters <- as.factor(c(0:31))
   pp_list<-list()
-
+  cluster.cell.types<-list()
   for(clust in clusters){
     df_bar.2 <- df_bar[which(df_bar[,'cluster']==clust),]
+    count.df<- df_bar.2 %>%
+      dplyr::count(celltype)%>%
+      dplyr::mutate(perc=n/sum(n)*100)
+    cluster.cell.types[[clust]]<- count.df
     pp<- ggplot(df_bar.2, aes(x=celltype, y=cluster,fill=celltype)) +
       geom_bar(stat = "identity")+theme(
         axis.text.x = element_text(angle = 45,size = 8,face='bold',  vjust = 1, hjust = 1),
@@ -55,5 +59,5 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
   pp <- wrap_plots(pp_list,ncol=2)+plot_layout(heights=2, ncol=2)
   ggsave(paste(path_to_save,'/',plot_name,'.pdf',sep=''),plot =pp  ,width = 15, height = 45)
   print(paste('save file in : ',path_to_save,'/',plot_name,'.pdf',sep=''))
-
+return(count.df)
 }
