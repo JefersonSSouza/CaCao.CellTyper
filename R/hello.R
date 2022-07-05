@@ -45,6 +45,7 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
     count.df<- df_bar.2 %>%
       dplyr::count(celltype)%>%
       dplyr::mutate(perc=n/sum(n)*100)
+      count.df[which(count.df[,"perc"]==max(count.df[,'perc'])),]
     cluster.cell.types[[clust]]<- count.df
     pp<- ggplot(df_bar.2, aes(x=celltype, y=cluster,fill=celltype)) +
       geom_bar(stat = "identity")+theme(
@@ -59,5 +60,5 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
   pp <- wrap_plots(pp_list,ncol=2)+plot_layout(heights=2, ncol=2)
   ggsave(paste(path_to_save,'/',plot_name,'.pdf',sep=''),plot =pp  ,width = 15, height = 45)
   print(paste('save file in : ',path_to_save,'/',plot_name,'.pdf',sep=''))
-return(count.df)
+return(cluster.cell.types)
 }
