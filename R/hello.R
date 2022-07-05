@@ -30,7 +30,6 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
   require('patchwork')
   require('ggforce')
   require('ggrepel')
-  setwd(dirname(rstudioapi::getActiveDocumentContext()$path))# define pasta de trabalho
   celltypes.df <- data.frame(cluster=c(all.markers.sig$cluster),marker=c(all.markers.sig$gene))
   df.marker <- filter(marker_file,Species==specie)
   df.marker <- filter(marker_file,Cell.type==cancer)
