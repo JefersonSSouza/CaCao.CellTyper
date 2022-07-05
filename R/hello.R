@@ -18,7 +18,7 @@
 #save(tissues, marker_file, file = ".RData")
 
 CaCao.Tissues<- function(){
-  #load("mydata.RData")
+  load("mydata.RData")
   return(tissues)
 }
 
@@ -30,6 +30,7 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
   require('patchwork')
   require('ggforce')
   require('ggrepel')
+  load("mydata.RData")
   celltypes.df <- data.frame(cluster=c(all.markers.sig$cluster),marker=c(all.markers.sig$gene))
   df.marker <- filter(marker_file,Species==specie)
   df.marker <- filter(marker_file,Cell.type==cancer)
