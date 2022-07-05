@@ -15,9 +15,9 @@
 
 
 
-
+#save(tissues, marker_file, file = "mydata.RData")
 CaCao.Tissues<- function(){
-  tissues <- read.delim('../All_tissues.txt',sep='\t',header = T)
+  load("mydata.RData")
   return(tissues)
 }
 
@@ -29,10 +29,8 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
   require('patchwork')
   require('ggforce')
   require('ggrepel')
-
-  marker_file <- read.delim('../All_markers.txt',sep='\t',header = T)
+  load("mydata.RData")
   celltypes.df <- data.frame(cluster=c(all.markers.sig$cluster),marker=c(all.markers.sig$gene))
-  colnames(marker_file) <- str_replace(colnames(marker_file),' ','.')
   df.marker <- filter(marker_file,Species==specie)
   df.marker <- filter(marker_file,Cell.type==cancer)
   df.marker <- filter(marker_file,Tissue.class==tissue)
