@@ -13,22 +13,12 @@
 #   Check Package:             'Cmd + Shift + E'
 #   Test Package:              'Cmd + Shift + T'
 
-library("readxl")
-require("ggplot2")
-require("dplyr")
-require("reshape2")
-require("readxl")
-require("ggplot2")
-require("dplyr")
-require("reshape2")
-require('RColorBrewer')
-require('patchwork')
-require('ggforce')
-require('ggrepel')
+
 
 
 CaCao.Tissues<- function(){
-
+  require("readxl")
+  require("stringr")
   tf <- tempfile(fileext=".xlsx")
   download.file("http://yikedaxue.slwshop.cn/Cell_marker_Seq.xlsx", tf, quiet=TRUE)
   rstudioapi::navigateToFile(tf)
@@ -39,7 +29,14 @@ CaCao.Tissues<- function(){
 }
 
 Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Normal cell',path_to_save=getwd(),plot_name='bar_plot_celltypes'){
-
+  require("readxl")
+  require("ggplot2")
+  require("dplyr")
+  require("reshape2")
+  require('RColorBrewer')
+  require('patchwork')
+  require('ggforce')
+  require('ggrepel')
   tf <- tempfile(fileext=".xlsx")
   download.file("http://yikedaxue.slwshop.cn/Cell_marker_Seq.xlsx", tf, quiet=TRUE)
   rstudioapi::navigateToFile(tf)
