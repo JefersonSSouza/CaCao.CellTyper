@@ -17,7 +17,6 @@
 
 #save(tissues, marker_file, file = "mydata.rda")
 CaCao.Tissues<- function(){
-  load("mydata.rda")
   return(tissues)
 }
 
@@ -29,7 +28,7 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
   require('patchwork')
   require('ggforce')
   require('ggrepel')
-  load("mydata.rda")
+
   celltypes.df <- data.frame(cluster=c(all.markers.sig$cluster),marker=c(all.markers.sig$gene))
   df.marker <- filter(marker_file,Species==specie)
   df.marker <- filter(marker_file,Cell.type==cancer)
