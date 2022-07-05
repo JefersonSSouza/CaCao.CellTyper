@@ -45,7 +45,8 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
     df_bar.2 <- df_bar[which(df_bar[,'cluster']==clust),]
     count.df<- df_bar.2 %>%
       dplyr::count(celltype)%>%
-      dplyr::mutate(perc=n/sum(n)*100)
+      dplyr::mutate(perc=n/sum(n)*100,
+                    cluster=clust)
       count.df <-count.df[which(count.df[,"perc"]==max(count.df[,'perc'])),]
       df.final<-bind_rows(df.final,count.df)
     pp<- ggplot(df_bar.2, aes(x=celltype, y=cluster,fill=celltype)) +
