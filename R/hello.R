@@ -17,19 +17,11 @@
 
 
 CaCao.Tissues<- function(){
-  require("readxl")
-  require("stringr")
-  tf <- tempfile(fileext=".xlsx")
-  download.file("http://yikedaxue.slwshop.cn/Cell_marker_Seq.xlsx", tf, quiet=TRUE)
-  rstudioapi::navigateToFile(tf)
-  marker_file <- read_excel(tf)
-  colnames(marker_file) <- str_replace(colnames(marker_file),' ','.')
-  tissues <- c(unique(marker_file$Tissue.class))
+  tissues <- readRDS('All_tissues.rds')
   return(tissues)
 }
 
 Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Normal cell',path_to_save=getwd(),plot_name='bar_plot_celltypes'){
-  require("readxl")
   require("ggplot2")
   require("dplyr")
   require("reshape2")
@@ -37,10 +29,8 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
   require('patchwork')
   require('ggforce')
   require('ggrepel')
-  tf <- tempfile(fileext=".xlsx")
-  download.file("http://yikedaxue.slwshop.cn/Cell_marker_Seq.xlsx", tf, quiet=TRUE)
-  rstudioapi::navigateToFile(tf)
-  marker_file <- read_excel(tf)
+
+  marker_file <- readRDS('All_markers.rds')
   celltypes.df <- data.frame(cluster=c(all.markers.sig$cluster),marker=c(all.markers.sig$gene))
   colnames(marker_file) <- str_replace(colnames(marker_file),' ','.')
   df.marker <- filter(marker_file,Species==specie)
