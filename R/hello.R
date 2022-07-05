@@ -16,8 +16,8 @@
 
 
 #save(tissues, marker_file, file = "mydata.RData")
+load("mydata.RData")
 CaCao.Tissues<- function(){
-  load("mydata.RData")
   return(tissues)
 }
 
