@@ -65,3 +65,21 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
  
 return(df.final)
 }
+
+seurat.CellTyper <- function(object,CaCao.cluster.percent,rm.celltype=c(), rm.cluster=c(),remove.duplicated.cluster=F){
+  if(remove.duplicated.cluster==T){
+CaCao.cluster.percent <- CaCao.cluster.percent[-which((CaCao.cluster.percent[,'celltype']==rm.celltype)& (CaCao.cluster.percent[,'cluster']==rm.cluster)) ,]
+  }
+                
+
+for(i in CaCao.cluster.percent$cluster){
+  print(i)
+  current_cluster= c(paste(i,sep=''))
+  df <- as.data.frame(CaCao.cluster.percent[which(CaCao.cluster.percent['cluster']==i),])
+  df$celltype <- as.character(df$celltype)
+  new_cluster = c(df[1,'celltype'])
+  object@active.ident <- plyr::mapvalues(x = object@active.ident, from = current_cluster, to = new_cluster)
+  object$cell.type.CaCao <- Idents(object)
+}
+return(object)
+}
