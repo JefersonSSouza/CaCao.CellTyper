@@ -68,7 +68,8 @@ return(df.final)
 
 seurat.CellTyper <- function(object,CaCao.cluster.percent,rm.celltype=c(), rm.cluster=c(),remove.duplicated.cluster=F){
   if(remove.duplicated.cluster==T){
-CaCao.cluster.percent <- CaCao.cluster.percent[-which((CaCao.cluster.percent[,'celltype']==rm.celltype)& (CaCao.cluster.percent[,'cluster']==rm.cluster)) ,]
+    for(rm.indx in 1:lengh(rm.celltype))
+    CaCao.cluster.percent <- CaCao.cluster.percent[-which((CaCao.cluster.percent[,'celltype']==rm.celltype[rm.indx])& (CaCao.cluster.percent[,'cluster']==rm.cluster[rm.indx])) ,]
   }
                 
 
