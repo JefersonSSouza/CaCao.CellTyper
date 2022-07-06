@@ -37,7 +37,7 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
   merged.celltypes$Cell.name <- as.factor(merged.celltypes$Cell.name)
   df_bar <- data.frame(cluster=c(merged.celltypes$cluster),celltype=c(merged.celltypes$Cell.name))
   df_bar <- melt(df_bar)
-  clusters <- as.factor(c(0:31))
+  clusters <- as.factor(c(0:length(unique(all.markers.sig$cluster))))
   pp_list<-list()
   cluster.cell.types<-list()
    df.final<-data.frame()
