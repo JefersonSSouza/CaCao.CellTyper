@@ -55,7 +55,7 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
         axis.text.y = element_text(size = 18,face = 'bold'),
         legend.position = 'none'
       )
-    pp<- pp+scale_fill_manual(values=colorRampPalette(brewer.pal(11,"Set1"))(31))
+    pp<- pp+scale_fill_manual(values=colorRampPalette(brewer.pal(11,"Set1"))(60))
     pp_list[[clust]]<- pp
   }
   pp_list[[clust]]
