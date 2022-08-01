@@ -71,7 +71,7 @@ seurat.CellTyper <- function(object,CaCao.cluster.percent,rm.celltype=c(), rm.cl
     for(rm.indx in 1:length(rm.celltype)){
     print(paste('removing : ',rm.celltype[rm.indx],sep=''))
     CaCao.cluster.percent <- CaCao.cluster.percent[-which((CaCao.cluster.percent[,'celltype']==rm.celltype[rm.indx])& (CaCao.cluster.percent[,'cluster']==rm.cluster[rm.indx])) ,]
-    print(CaCao.cluster.percent[-which((CaCao.cluster.percent[,'celltype']==rm.celltype[rm.indx])& (CaCao.cluster.percent[,'cluster']==rm.cluster[rm.indx])) ,])
+    
   }
   }
                 
