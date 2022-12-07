@@ -21,8 +21,6 @@ remotes::install_github('JefersonSSouza/CaCao.CellTyper')
 ```
 
 
-```
-
 ## Usage example
 ### Run finAllMarkers from Seurat package
 ```sh
