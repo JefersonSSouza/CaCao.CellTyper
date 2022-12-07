@@ -23,7 +23,7 @@ allmarkers <- findAllMarkers(object.seurat,only.pos=T, min.pct = 0.25, logfc.thr
 ```sh
 allmarkers %>%
   group_by(cluster) %>%
-  top_n(n = 50, wt = avg_log2FC) -> top.sig.genes #top 50 genes por cluster
+  top_n(n = 50, wt = avg_log2FC) -> top.sig.genes #top 50 genes by cluster
 ```
 ### load CaCao.CellTyper and  dplyr packages
 ```sh
