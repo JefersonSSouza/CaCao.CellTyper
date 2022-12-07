@@ -41,7 +41,7 @@ library(dplyr)
 ```sh
 CaCao.Tissues()
 ```
-### Returns a tissue list - please check the file on [GitHub Pages](https://github.com/JefersonSSouza/CaCao.CellTyper/Master/CaCao.Tissues.txt)
+### Returns a tissue list - please check the file on [CaCao.Tissues.txt](https://github.com/JefersonSSouza/CaCao.CellTyper/blob/master/CaCao.Tissues.txt)
 
 ### identifying all cell types an save a PDF file to path 
 ```sh
