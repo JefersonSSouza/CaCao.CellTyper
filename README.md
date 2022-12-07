@@ -1,11 +1,4 @@
 # CaCao.CellTyper
-
-> Short blurb about what your product does.
-
-[![R Version][R-image]][R-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
-
 A Seurat cell typer package.
 
 ![](header.png)
