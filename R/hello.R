@@ -30,9 +30,8 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
   require('ggrepel')
 
   celltypes.df <- data.frame(cluster=c(all.markers.sig$cluster),marker=c(all.markers.sig$gene))
-  df.marker <- filter(marker_file,Species==specie)
-  df.marker <- filter(marker_file,Cell.type==cancer)
-  df.marker <- filter(marker_file,Tissue.class==tissue)
+  df.marker <- filter(marker_file,Species==specie & Cell.type==cancer & Tissue.class==tissue )
+
   merged.celltypes <- merge(celltypes.df, df.marker, by.x='marker',by.y='Marker')
   merged.celltypes$Cell.name <- as.factor(merged.celltypes$Cell.name)
   df_bar <- data.frame(cluster=c(merged.celltypes$cluster),celltype=c(merged.celltypes$Cell.name))
@@ -47,6 +46,7 @@ Identify.CellTypes <- function(all.markers.sig,specie='Human',tissue,cancer='Nor
       dplyr::count(celltype)%>%
       dplyr::mutate(perc=n/sum(n)*100,
                     cluster=clust)
+    
       count.df <-count.df[which(count.df[,"perc"]==max(count.df[,'perc'])),]
       df.final<-bind_rows(df.final,count.df)
     pp<- ggplot(df_bar.2, aes(x=celltype, y=cluster,fill=celltype)) +
