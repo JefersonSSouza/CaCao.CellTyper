@@ -53,7 +53,7 @@ Identify.CellTypes <- function(all.markers.sig, specie = "Human", tissue, cancer
   df.final <- data.frame()
   for (clust in clusters) {
     df_bar.2 <- df_bar[which(df_bar[, "cluster"] == clust), ]
-    print(paste('Cluster :',clust)
+    print(paste('Cluster :',clust))
     print('-----------------')
     count.df <- df_bar.2 %>%
       dplyr::count(celltype) %>%
