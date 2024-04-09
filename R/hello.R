@@ -40,28 +40,40 @@ Identify.CellTypes <- function(all.markers.sig, specie = "Human", tissue, cancer
   require("patchwork")
   require("ggforce")
   require("ggrepel") # nolint: single_quotes_linter.
-
-  celltypes.df <- data.frame(cluster = c(all.markers.sig$cluster), marker = c(all.markers.sig$gene)) # nolint
+  celltypes.df <- data.frame(cluster = c(all.markers.sig$cluster), marker = c(all.markers.sig$gene), log2FC = c(all.markers.sig$avg_log2FC)) # nolint
   df.marker <- filter(marker_file, Species == specie & Cell.type == cancer & Tissue.class == tissue) # nolint: line_length_linter.
-
+  
   merged.celltypes <- merge(celltypes.df, df.marker, by.x = "marker", by.y = "Marker")
   merged.celltypes$Cell.name <- as.factor(merged.celltypes$Cell.name)
-  df_bar <- data.frame(cluster = c(merged.celltypes$cluster), celltype = c(merged.celltypes$Cell.name))
-  df_bar <- melt(df_bar)
-  clusters <- as.factor(c(0:length(unique(all.markers.sig$cluster))))
+  df_bar <- data.frame(cluster = c(merged.celltypes$cluster), celltype = c(merged.celltypes$Cell.name),marker=c(merged.celltypes$marker), log2FC = c(merged.celltypes$log2FC))
+  #df_bar <- melt(df_bar)
+  clusters <- as.factor(c(0:(length(unique(all.markers.sig$cluster))-1)))
   pp_list <- list()
   cluster.cell.types <- list()
   df.final <- data.frame()
   for (clust in clusters) {
     df_bar.2 <- df_bar[which(df_bar[, "cluster"] == clust), ]
+    print(paste('Cluster :',clust)
+    print('-----------------')
     count.df <- df_bar.2 %>%
       dplyr::count(celltype) %>%
       dplyr::mutate(
         perc = n / sum(n) * 100,
         cluster = clust
       )
-
-    count.df <- count.df[which(count.df[, "perc"] == max(count.df[, "perc"])), ]
+    
+    if(length(unique(count.df$n))>1){
+      count.df <- count.df[which(count.df[, "n"] == max(count.df[, "n"])), ]
+    }else{
+      temp <- df_bar.2[which(df_bar.2[, "log2FC"] == max(df_bar.2[, "log2FC"])), ]
+      if(length(unique(temp$celltype))>1){
+        count.df <- count.df
+      }else{
+        
+        count.df <- count.df[which(count.df[, "cluster"] == temp[,'cluster'] &  count.df[, "celltype"] == temp[,'celltype']), ]
+        }
+      }
+    
     df.final <- bind_rows(df.final, count.df)
     pp <- ggplot(df_bar.2, aes(x = celltype, y = cluster, fill = celltype)) +
       geom_bar(stat = "identity") +
@@ -73,13 +85,15 @@ Identify.CellTypes <- function(all.markers.sig, specie = "Human", tissue, cancer
     pp <- pp + scale_fill_manual(values = colorRampPalette(colors())(200))
     pp_list[[clust]] <- pp
   }
-  pp_list[[clust]]
-  pp <- wrap_plots(pp_list, ncol = 2) + plot_layout(heights = 2, ncol = 2)
-  ggsave(paste(path_to_save, "/", plot_name, ".pdf", sep = ""), plot = pp, width = 15, height = 45)
+  pp1 <- wrap_plots(pp_list, ncol = 2) + plot_layout(heights = 2, ncol = 2)
+  ggsave(paste(path_to_save, "/", plot_name, ".pdf", sep = ""), plot = pp1, width = 15, height = 45)
   print(paste("save file in : ", path_to_save, "/", plot_name, ".pdf", sep = ""))
-
+  
+  df.final <- na.omit(df.final)
   return(df.final)
 }
+
+
 
 seurat.CellTyper <- function(object, CaCao.cluster.percent, rm.celltype = c(), rm.cluster = c(), remove.duplicated.cluster = F) {
   if (remove.duplicated.cluster == T) {
