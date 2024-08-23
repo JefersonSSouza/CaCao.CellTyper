@@ -51,8 +51,7 @@ cluster.percentage <- Identify.CellTypes(
 ```sh
 object.seurat <- seurat.CellTyper(object=object.seurat,
                  CaCao.cluster.percent = cluster.percentage,
-                 rm.celltype = c('Alveolar macrophage'),  # remove cell types annotation attributed to the same percentage, in this case, will be removed 'Alveolar macrophage'.
-                 rm.cluster = c('2'), #cluster with  duplicated cell types annotation attributed to the same percentage.
+                 rm.celltype = c('Alveolar macrophage'=2),  # remove cell types annotation attributed to the same percentage, in this case, will be removed 'Alveolar macrophage'.
                  remove.duplicated.cluster = T)
 ```
 
