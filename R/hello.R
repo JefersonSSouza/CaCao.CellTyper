@@ -114,6 +114,7 @@ seurat.CellTyper <- function(object, CaCao.cluster.percent, rm.celltype = c(), r
     df$celltype <- as.character(df$celltype)
     new_cluster <- c(df[1, "celltype"])
     object@active.ident <- plyr::mapvalues(x = object@active.ident, from = current_cluster, to = new_cluster)
+    object$cell.type.CaCao <- plyr::mapvalues(x = object@active.ident, from = current_cluster, to = new_cluster)
     object$cell.type.CaCao <- Idents(object)
   }
   return(object)
